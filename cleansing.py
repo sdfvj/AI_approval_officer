@@ -20,7 +20,7 @@ test_ratio = 0.15
 image_filenames = [os.path.splitext(f)[0] for f in os.listdir(image_dir)]
 label_filenames = [os.path.splitext(f)[0] for f in os.listdir(label_dir)]
 
-# randomize the file list
+# randomize the file list. directly change the original list
 random.shuffle(image_filenames)
 
 # calculate the number of files for each classification
@@ -47,14 +47,16 @@ os.makedirs(test_label_dir, exist_ok=True)
 
 # division
 for i, filename in enumerate(image_filenames):
-    if i < train_count:
+    #对于一个可迭代的（iterable）/可遍历的对象（如列表、字符串），可利用enumerate函数同时获取对象的索引和值
+    
+    if i < train_count: #i corresponds to the training data
         output_image_dir = train_image_dir
         output_label_dir = train_label_dir
-    elif i < train_count + valid_count:
+    elif i < train_count + valid_count: #these i correscpond to the validation data
         output_image_dir = valid_image_dir
         output_label_dir = valid_label_dir
     else:
-        output_image_dir = test_image_dir
+        output_image_dir = test_image_dir #testing data
         output_label_dir = test_label_dir
 
     # copy image files
